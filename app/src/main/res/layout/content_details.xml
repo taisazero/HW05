@@ -133,7 +133,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:paddingLeft="15dp"
-        android:text="@string/similar_tracks"
+        android:text="Similar Tracks"
         android:textColor="@android:color/black"
         android:textSize="24sp"
         android:textStyle="bold"

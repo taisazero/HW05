@@ -1,7 +1,8 @@
 <resources>
-    <string name="app_name">HW05</string>
+    <string name="app_name">Music Search</string>
+    <string name="title_activity_testing">Testing</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="title_activity_test">TEst</string>
+    <string name="title_activity_test">Test</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="title_activity_details">DetailsActivity</string>
     <string name="title_activity_results">ResultsActivity</string>

@@ -17,6 +17,13 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
+        RequestParams r=new RequestParams("GET","http://ws.audioscrobbler.com/2.0/?format=json");
+        r.addParam("method","track.search");
+        r.addParam("track","Colors");
+        r.addParam("artist","FLOW");
+        r.addParam("api_key","426392c61e4a15c55916cd91b1bf857d");
+        r.addParam("limit","20");
+        new LoadData().execute(r);
 
 
     }
