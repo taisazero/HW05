@@ -25,6 +25,8 @@ public class LoadData extends AsyncTask<RequestParams,Void,String> {
     @Override
     protected String doInBackground(RequestParams... requests) {
         String data="";
+        StringBuilder sb=null;
+        Music.results=new ArrayList<>();
         try {
             HttpURLConnection connection=requests[0].setUpConnection();
             connection.connect();
@@ -32,15 +34,22 @@ public class LoadData extends AsyncTask<RequestParams,Void,String> {
             if(connection.getResponseCode()== HttpURLConnection.HTTP_OK) {
                 // data= IOUtils.toString(connection.getInputStream(),"UTF-8");
                 BufferedReader br= new BufferedReader (new InputStreamReader(connection.getInputStream()));
-                while(br.readLine()!=null){
-                    data+=br.readLine();
+               sb=new StringBuilder();
+                while((data=br.readLine())!=null){
+                    sb.append(data);
                     Log.d("data",data);
                 }
                 br.close();
-                JSONObject root=new JSONObject(data);
-                JSONObject results=root.getJSONObject("trackmatches");
-                JSONArray tracks=results.getJSONArray("tracks");
-                Log.d("parsing 1","found "+tracks.length()+"tracks");
+                JSONObject root=new JSONObject(sb.toString());
+                JSONObject r=root.getJSONObject("results");
+
+
+
+
+
+                JSONObject results=r.getJSONObject("trackmatches");
+                JSONArray tracks=results.getJSONArray("track");
+                Log.d("parsing 1","found "+tracks.length()+"track");
                 for(int i =0; i<tracks.length();i++){
                     JSONObject t=tracks.getJSONObject(i);
                     Music m=new Music();
@@ -64,7 +73,7 @@ public class LoadData extends AsyncTask<RequestParams,Void,String> {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return data;
+        return sb.toString();
     }
 
 
@@ -72,6 +81,9 @@ public class LoadData extends AsyncTask<RequestParams,Void,String> {
     @Override
     protected void onPostExecute(String s) {
         Log.d("parsing",s);
+        for (Music m : Music.results) {
+            Log.d("Musics",m.toString() );
+        }
     }
 }
 

@@ -46,7 +46,7 @@ public class RequestParams {
         for (String key: params.keySet()){
             try {
                 String value = URLEncoder.encode(params.get(key), "UTF-8");
-                Log.d("URL TEST", value);
+
                 //StringTokenizer token = new StringTokenizer(value, "%2");
               //  String[] temp = new String[token.countTokens()];
                 //for (int i = 0; token.hasMoreElements(); i++) {
@@ -70,7 +70,7 @@ public class RequestParams {
         return sb.toString();
     }
     public String getEncodedUrl(){
-
+        Log.d("URL",this.baseURL+getEncodedParams());
         return this.baseURL+getEncodedParams();
 
     }
