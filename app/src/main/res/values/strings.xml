@@ -3,4 +3,8 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_test">TEst</string>
     <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_activity_details">DetailsActivity</string>
+    <string name="title_activity_results">ResultsActivity</string>
+    <string name="similar_tracks">Similar Tracks</string>
+    <string name="txt_results">Results</string>
 </resources>
