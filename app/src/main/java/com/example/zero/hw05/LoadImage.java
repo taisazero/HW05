@@ -15,9 +15,11 @@ import java.net.URI;
 import java.net.URL;
 
 /**
- * Created by Zero on 10/15/2017.
+ * @author Josiah Laivins
+ * @author Erfan Al-Hossami
+ *
+ * @version 10/16/2017
  */
-
 public class LoadImage extends AsyncTask<String,Integer,Bitmap> {
     ImageView view;
     //ProgressBar pb;

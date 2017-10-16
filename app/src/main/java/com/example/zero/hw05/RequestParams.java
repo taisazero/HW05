@@ -1,9 +1,11 @@
 package com.example.zero.hw05;
 
 /**
- * Created by Zero on 10/14/2017.
+ * @author Josiah Laivins
+ * @author Erfan Al-Hossami
+ *
+ * @version 10/16/2017
  */
-
 import android.util.Log;
 
 import java.io.IOException;

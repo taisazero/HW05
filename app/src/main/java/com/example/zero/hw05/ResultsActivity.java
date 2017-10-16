@@ -16,6 +16,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+/**
+ * @author Josiah Laivins
+ * @author Erfan Al-Hossami
+ *
+ * @version 10/16/2017
+ */
 public class ResultsActivity extends AppCompatActivity {
 
     @Override

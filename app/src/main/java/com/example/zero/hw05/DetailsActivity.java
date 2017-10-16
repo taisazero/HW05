@@ -17,6 +17,12 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+/**
+ * @author Josiah Laivins
+ * @author Erfan Al-Hossami
+ *
+ * @version 10/16/2017
+ */
 public class DetailsActivity extends AppCompatActivity {
     TextView name;
     TextView artist;

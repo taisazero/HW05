@@ -18,9 +18,11 @@ import java.net.HttpURLConnection;
 import java.util.ArrayList;
 
 /**
- * Created by Zero on 10/14/2017.
+ * @author Josiah Laivins
+ * @author Erfan Al-Hossami
+ *
+ * @version 10/16/2017
  */
-
 public class LoadData extends AsyncTask<RequestParams,Void,String> {
     Intent i;
     MainActivity m;
@@ -32,7 +34,18 @@ public class LoadData extends AsyncTask<RequestParams,Void,String> {
     protected String doInBackground(RequestParams... requests) {
         String data="";
         StringBuilder sb=null;
-        Music.results=new ArrayList<>();
+        if (Music.results != null) {
+            ArrayList<Music> temp = new ArrayList<>();
+            for (Music result : Music.results) {
+                if (result.isFavorate()) {
+                    temp.add(result);
+                }
+            }
+            for (Music music : temp) {
+                Music.favorites.add(music);
+            }
+        }
+        Music.results = new ArrayList<>();
         try {
             HttpURLConnection connection=requests[0].setUpConnection();
             connection.connect();

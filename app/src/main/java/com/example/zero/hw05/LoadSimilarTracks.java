@@ -15,9 +15,11 @@ import java.net.HttpURLConnection;
 import java.util.ArrayList;
 
 /**
- * Created by Zero on 10/16/2017.
+ * @author Josiah Laivins
+ * @author Erfan Al-Hossami
+ *
+ * @version 10/16/2017
  */
-
 public class LoadSimilarTracks extends AsyncTask<RequestParams,Void,String> {
     Music m;
     public LoadSimilarTracks(Music m){

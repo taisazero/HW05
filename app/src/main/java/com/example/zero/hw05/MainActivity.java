@@ -7,17 +7,26 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.concurrent.RunnableFuture;
 
-
+/**
+ * @author Josiah Laivins
+ * @author Erfan Al-Hossami
+ *
+ * @version 10/16/2017
+ */
 public class MainActivity extends AppCompatActivity {
     Button search;
     EditText text;
@@ -30,26 +39,77 @@ public class MainActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
         setHandlers();
+
+        generateList();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        generateList();
     }
 
 
-    public void setHandlers(){
-        search=(Button)findViewById(R.id.btnSearch);
+    public void generateList() {
+
+        if (Music.results != null) {
+            ArrayList<Music> favorites = new ArrayList<>();
+            for (Music result : Music.results) {
+                if (result.isFavorate()) {
+                    favorites.add(result);
+                }
+            }
+            if (Music.favorites != null) {
+                for (Music favorite : Music.favorites) {
+                    favorites.add(favorite);
+                }
+            }
+
+            for (Music favorite : favorites) {
+                if (!favorite.isFavorate()) {
+                    favorites.remove(favorite);
+                }
+            }
+
+
+            MusicAdapter adapter = new MusicAdapter(this, favorites);
+
+            ListView list = (ListView) findViewById(R.id.mainListView);
+            list.setAdapter(adapter);
+            list.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
+
+            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Log.d("ResultsActivity::", "List clicked");
+                    Intent i = new Intent(MainActivity.this, DetailsActivity.class);
+                    i.putExtra("position", position);
+                    startActivity(i);
+                    finish();
+                }
+            });
+        }
+    }
+
+
+    public void setHandlers() {
+        search = (Button) findViewById(R.id.btnSearch);
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                text=(EditText)findViewById(R.id.editTrackSearch);
+                text = (EditText) findViewById(R.id.editTrackSearch);
 
-                if(isConnected()) {
+                if (isConnected()) {
                     RequestParams r = new RequestParams("GET", "http://ws.audioscrobbler.com/2.0/?format=json");
                     r.addParam("method", "track.search");
-                    r.addParam("track", text.getText().toString() );
+                    r.addParam("track", text.getText().toString());
 
                     r.addParam("api_key", "426392c61e4a15c55916cd91b1bf857d");
                     r.addParam("limit", "20");
 
-                    Intent i =new Intent(MainActivity.this,ResultsActivity.class);
-                    new LoadData(MainActivity.this,i).execute(r);
+                    Intent i = new Intent(MainActivity.this, ResultsActivity.class);
+                    new LoadData(MainActivity.this, i).execute(r);
                 }
             }
         });
@@ -84,20 +144,13 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.action_exit:
                 Toast.makeText(this, "Exited!",
-                       Toast.LENGTH_SHORT).show();
-
-
-                    finish();
-
-
-
-
+                        Toast.LENGTH_SHORT).show();
+                finish();
                 break;
         }
 
         return super.onOptionsItemSelected(item);
     }
-
 
 
 }

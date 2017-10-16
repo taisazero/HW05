@@ -6,13 +6,15 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
- * Created by Zero on 10/14/2017.
+ * @author Josiah Laivins
+ * @author Erfan Al-Hossami
+ *
+ * @version 10/16/2017
  */
-
 public class Music {
     public static ArrayList<Music> results;
-    public static ArrayList<Music> favorites;
     public ArrayList<Music> similars;
+    public static ArrayList<Music> favorites = new ArrayList<>();
     private String name;
     private String artist;
     private String url;

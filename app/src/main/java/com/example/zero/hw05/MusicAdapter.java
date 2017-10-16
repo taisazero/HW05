@@ -16,9 +16,11 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 
 /**
- * Created by Zero on 10/16/2017.
+ * @author Josiah Laivins
+ * @author Erfan Al-Hossami
+ *
+ * @version 10/16/2017
  */
-
 public class MusicAdapter extends ArrayAdapter<Music> {
     Context context;
     ArrayList<Music> list;
