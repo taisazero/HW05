@@ -1,5 +1,6 @@
 package com.example.zero.hw05;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.speech.tts.Voice;
 import android.util.Log;
@@ -21,7 +22,12 @@ import java.util.ArrayList;
  */
 
 public class LoadData extends AsyncTask<RequestParams,Void,String> {
-
+    Intent i;
+    MainActivity m;
+    public LoadData(MainActivity m,Intent i){
+        this.i=i;
+        this.m=m;
+    }
     @Override
     protected String doInBackground(RequestParams... requests) {
         String data="";
@@ -58,7 +64,7 @@ public class LoadData extends AsyncTask<RequestParams,Void,String> {
                     m.setUrl(t.getString("url"));
                     JSONArray images=t.getJSONArray("image");
                     JSONObject smallPic=images.getJSONObject(0);
-                    JSONObject largePic=images.getJSONObject(2);
+                    JSONObject largePic=images.getJSONObject(3);
                     m.setSmallURL(smallPic.getString("#text"));
                     m.setLargeURL(largePic.getString("#text"));
                     Music.results.add(m);
@@ -84,6 +90,9 @@ public class LoadData extends AsyncTask<RequestParams,Void,String> {
         for (Music m : Music.results) {
             Log.d("Musics",m.toString() );
         }
+        m.startActivity(i);
+        m.finish();
+
     }
 }
 

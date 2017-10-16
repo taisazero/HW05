@@ -51,9 +51,10 @@ public class MainActivity extends AppCompatActivity {
 
                     r.addParam("api_key", "426392c61e4a15c55916cd91b1bf857d");
                     r.addParam("limit", "20");
-                    new LoadData().execute(r);
+
                     Intent i =new Intent(MainActivity.this,ResultsActivity.class);
-                    startActivity(i);
+                    new LoadData(MainActivity.this,i).execute(r);
+
 
                 }
             }
