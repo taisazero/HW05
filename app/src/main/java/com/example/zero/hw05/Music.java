@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class Music {
     public static ArrayList<Music> results;
     public static ArrayList<Music> favorites;
+    public ArrayList<Music> similars;
     private String name;
     private String artist;
     private String url;
@@ -20,6 +21,10 @@ public class Music {
     private boolean isFavorate;
     private Bitmap smallPic;
     private Bitmap largePic;
+    public ArrayList<Music>getSimilars(){return this.similars;}
+    public void setSimilars(ArrayList<Music> list){
+        this.similars=list;
+    }
     public String getName() {
         return name;
     }

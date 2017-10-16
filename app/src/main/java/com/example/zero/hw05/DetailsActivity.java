@@ -42,6 +42,14 @@ public class DetailsActivity extends AppCompatActivity {
             url.setText(selection.getUrl());
             url.setClickable(true);
             new LoadImage(pic).execute(selection.getLargeURL());
+            //http://ws.audioscrobbler.com/2.0/?method=track.getsimilar&artist=<ARTISTNAME>&track=TRACKNAME&api_key=YOUR_API_KEY&format=json &limit=10
+            RequestParams link = new RequestParams("GET","http://ws.audioscrobbler.com/2.0/?format=json");
+            link.addParam("method","track.getsimilar");
+            link.addParam("artist",selection.getArtist());
+            link.addParam("track",selection.getName());
+            link.addParam("api_key","426392c61e4a15c55916cd91b1bf857d");
+            link.addParam("limit","10");
+
             setHandlers();
 
         } else {
