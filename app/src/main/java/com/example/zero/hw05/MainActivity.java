@@ -50,8 +50,6 @@ public class MainActivity extends AppCompatActivity {
 
                     Intent i =new Intent(MainActivity.this,ResultsActivity.class);
                     new LoadData(MainActivity.this,i).execute(r);
-
-
                 }
             }
         });

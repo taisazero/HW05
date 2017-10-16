@@ -91,7 +91,7 @@ public class LoadData extends AsyncTask<RequestParams,Void,String> {
             Log.d("Musics",m.toString() );
         }
         m.startActivity(i);
-        m.finish();
+        //m.finish();
 
     }
 }

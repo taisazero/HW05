@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -29,7 +30,7 @@ public class MusicAdapter extends ArrayAdapter<Music> {
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, final ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -38,7 +39,7 @@ public class MusicAdapter extends ArrayAdapter<Music> {
             holder.image = (ImageView) convertView.findViewById(R.id.songPic);
             holder.artistName = (TextView) convertView.findViewById(R.id.aName);
             holder.name = (TextView) convertView.findViewById(R.id.name);
-            //holder.favorate = (ImageButton) convertView.findViewById(R.id.imgBtn);
+            holder.favorate = (ImageButton) convertView.findViewById(R.id.imgBtn);
             convertView.setTag(holder);
 
         }
@@ -46,20 +47,22 @@ public class MusicAdapter extends ArrayAdapter<Music> {
         TextView name = holder.name;
         TextView aName = holder.artistName;
         ImageView pic = holder.image;
-        //final ImageButton favorate = holder.favorate;
+        final ImageButton favorate = holder.favorate;
         name.setText(list.get(position).getName());
         aName.setText(list.get(position).getArtist());
         new LoadImage(pic).execute(list.get(position).getSmallURL());
-/*
+
         if (list.get(position).isFavorate()) {
             favorate.setImageResource(android.R.drawable.star_big_on);
         } else {
             favorate.setImageResource(android.R.drawable.star_big_off);
         }
 
+
         favorate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (list.get(position).isFavorate()) {
                     favorate.setImageResource(android.R.drawable.star_big_off);
                     list.get(position).setFavorate(false);
@@ -68,7 +71,7 @@ public class MusicAdapter extends ArrayAdapter<Music> {
                     list.get(position).setFavorate(true);
                 }
             }
-        });*/
+        });
 
         return convertView;
     }
@@ -77,7 +80,7 @@ public class MusicAdapter extends ArrayAdapter<Music> {
         ImageView image;
         TextView name;
         TextView artistName;
-        //ImageButton favorate;
+        ImageButton favorate;
     }
 
 }

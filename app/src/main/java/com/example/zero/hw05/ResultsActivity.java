@@ -28,7 +28,7 @@ public class ResultsActivity extends AppCompatActivity {
 
         ListView list=(ListView)findViewById(R.id.resultsListView);
         list.setAdapter(adapter);
-        //list.setDescendantFocusability(ViewGroup.FOCUS_AFTER_DESCENDANTS);
+        list.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

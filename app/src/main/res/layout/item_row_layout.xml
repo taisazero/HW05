@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:descendantFocusability="blocksDescendants">
 
 
     <LinearLayout
@@ -94,8 +95,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight=".4"
-            android:visibility="gone"
-            app:srcCompat="@android:drawable/btn_star_big_off" />
+            android:visibility="visible"
+            app:srcCompat="@android:drawable/btn_star_big_off"
+            android:focusable="false"/>
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
