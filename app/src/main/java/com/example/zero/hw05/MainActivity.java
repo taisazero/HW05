@@ -30,10 +30,6 @@ public class MainActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
         setHandlers();
-
-
-
-
     }
 
 
@@ -60,8 +56,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-
 
     private boolean isConnected() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);

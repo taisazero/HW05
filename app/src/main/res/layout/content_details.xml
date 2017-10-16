@@ -36,13 +36,13 @@
 
         <TextView
             android:id="@+id/txtName"
-            android:layout_width="wrap_content"
+            android:layout_width="20dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.36"
             android:text="Name:"
             android:textAlignment="center"
             android:textColor="@android:color/background_dark"
-            android:textSize="18sp" />
+            android:textSize="18sp"/>
 
         <TextView
             android:id="@+id/txtResultName"
@@ -70,7 +70,7 @@
 
         <TextView
             android:id="@+id/txtArtist"
-            android:layout_width="wrap_content"
+            android:layout_width="20dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.36"
             android:text="Artist:"
@@ -105,7 +105,7 @@
 
         <TextView
             android:id="@+id/txtUrl"
-            android:layout_width="wrap_content"
+            android:layout_width="20dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.36"
             android:text="URL:"

@@ -17,6 +17,7 @@ public class Music {
     private String url;
     private String smallURL;
     private String largeURL;
+    private boolean isFavorate;
     private Bitmap smallPic;
     private Bitmap largePic;
     public String getName() {
@@ -59,7 +60,13 @@ public class Music {
         this.largeURL = largeURL;
     }
 
+    public boolean isFavorate() {
+        return isFavorate;
+    }
 
+    public void setFavorate(boolean favorate) {
+        isFavorate = favorate;
+    }
 
     public Music (){
 
@@ -73,6 +80,9 @@ public class Music {
                 ", url='" + url + '\'' +
                 ", smallURL='" + smallURL + '\'' +
                 ", largeURL='" + largeURL + '\'' +
+                ", isFavorate=" + isFavorate +
+                ", smallPic=" + smallPic +
+                ", largePic=" + largePic +
                 '}';
     }
 
@@ -82,6 +92,7 @@ public class Music {
         this.url=url;
         this.smallURL=small;
         this.largeURL=large;
+        this.isFavorate = false;
     }
 
 }

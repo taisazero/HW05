@@ -6,10 +6,15 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class ResultsActivity extends AppCompatActivity {
 
@@ -23,10 +28,12 @@ public class ResultsActivity extends AppCompatActivity {
 
         ListView list=(ListView)findViewById(R.id.resultsListView);
         list.setAdapter(adapter);
+        //list.setDescendantFocusability(ViewGroup.FOCUS_AFTER_DESCENDANTS);
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("ResultsActivity::", "List clicked");
                 Intent i = new Intent(ResultsActivity.this,DetailsActivity.class);
                 i.putExtra("position",position);
                 startActivity(i);
@@ -35,6 +42,31 @@ public class ResultsActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_navigation, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_go_home:
+                Toast.makeText(this, "You are already home!",
+                        Toast.LENGTH_LONG).show();
+                break;
+
+            case R.id.action_exit:
+                Toast.makeText(this, "Exited!",
+                        Toast.LENGTH_SHORT).show();
+                finish();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }
