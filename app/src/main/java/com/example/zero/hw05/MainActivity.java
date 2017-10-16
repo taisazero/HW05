@@ -116,6 +116,11 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        finish();
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
