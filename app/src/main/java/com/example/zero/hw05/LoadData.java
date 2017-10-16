@@ -80,7 +80,7 @@ public class LoadData extends AsyncTask<RequestParams,Void,String> {
 
     @Override
     protected void onPostExecute(String s) {
-        Log.d("parsing",s);
+
         for (Music m : Music.results) {
             Log.d("Musics",m.toString() );
         }

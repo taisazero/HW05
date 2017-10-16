@@ -1,6 +1,7 @@
 package com.example.zero.hw05;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -8,12 +9,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.concurrent.RunnableFuture;
 
 
 public class MainActivity extends AppCompatActivity {
+    Button search;
+    EditText text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,20 +29,38 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
+        setHandlers();
 
-        if(isConnected()) {
-            RequestParams r = new RequestParams("GET", "http://ws.audioscrobbler.com/2.0/?format=json");
-            r.addParam("method", "track.search");
-            r.addParam("track", "Colors");
-            r.addParam("artist", "FLOW");
-            r.addParam("api_key", "426392c61e4a15c55916cd91b1bf857d");
-            r.addParam("limit", "20");
-            new LoadData().execute(r);
 
-        }
 
 
     }
+
+
+    public void setHandlers(){
+        search=(Button)findViewById(R.id.btnSearch);
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                text=(EditText)findViewById(R.id.editTrackSearch);
+
+                if(isConnected()) {
+                    RequestParams r = new RequestParams("GET", "http://ws.audioscrobbler.com/2.0/?format=json");
+                    r.addParam("method", "track.search");
+                    r.addParam("track", text.getText().toString() );
+
+                    r.addParam("api_key", "426392c61e4a15c55916cd91b1bf857d");
+                    r.addParam("limit", "20");
+                    new LoadData().execute(r);
+                    Intent i =new Intent(MainActivity.this,ResultsActivity.class);
+                    startActivity(i);
+
+                }
+            }
+        });
+    }
+
+
 
     private boolean isConnected() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -65,11 +90,21 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.action_exit:
-                Toast.makeText(this, "Exiting!",
-                        Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Exited!",
+                       Toast.LENGTH_SHORT).show();
+
+
+                    finish();
+
+
+
+
+                break;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+
 
 }
