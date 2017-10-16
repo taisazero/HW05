@@ -25,8 +25,7 @@ public class SearchActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_go_home:
-                Toast.makeText(this, "You are already home!",
-                        Toast.LENGTH_LONG).show();
+                finish();
                 break;
 
             case R.id.action_exit:
