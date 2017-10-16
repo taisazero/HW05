@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -53,43 +54,25 @@ public class MainActivity extends AppCompatActivity {
 
     public void generateList() {
 
-        if (Music.results != null) {
-            ArrayList<Music> favorites = new ArrayList<>();
-            for (Music result : Music.results) {
-                if (result.isFavorate()) {
-                    favorites.add(result);
-                }
+        ArrayList<Music> favorites = Music.favorites;
+
+        MusicAdapter adapter = new MusicAdapter(this, favorites);
+
+        ListView list = (ListView) findViewById(R.id.mainListView);
+        list.setAdapter(adapter);
+        list.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("ResultsActivity::", "List clicked");
+                Intent i = new Intent(MainActivity.this, DetailsActivity.class);
+                i.putExtra("position", position);
+                startActivity(i);
+                finish();
             }
-            if (Music.favorites != null) {
-                for (Music favorite : Music.favorites) {
-                    favorites.add(favorite);
-                }
-            }
+        });
 
-            for (Music favorite : favorites) {
-                if (!favorite.isFavorate()) {
-                    favorites.remove(favorite);
-                }
-            }
-
-
-            MusicAdapter adapter = new MusicAdapter(this, favorites);
-
-            ListView list = (ListView) findViewById(R.id.mainListView);
-            list.setAdapter(adapter);
-            list.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
-
-            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Log.d("ResultsActivity::", "List clicked");
-                    Intent i = new Intent(MainActivity.this, DetailsActivity.class);
-                    i.putExtra("position", position);
-                    startActivity(i);
-                    finish();
-                }
-            });
-        }
     }
 
 
@@ -145,7 +128,11 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_exit:
                 Toast.makeText(this, "Exited!",
                         Toast.LENGTH_SHORT).show();
-                finish();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    finishAndRemoveTask();
+                } else {
+                    this.finishAffinity();
+                }
                 break;
         }
 

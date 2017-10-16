@@ -1,6 +1,5 @@
 package com.example.zero.hw05;
 
-import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -12,7 +11,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.util.ArrayList;
 
 /**
  * @author Josiah Laivins
@@ -31,7 +29,6 @@ public class LoadSimilarTracks extends AsyncTask<RequestParams,Void,String> {
 
         try {
             HttpURLConnection connection=requests[0].setUpConnection();
-
             connection.connect();
 
             if(connection.getResponseCode()== HttpURLConnection.HTTP_OK) {
@@ -45,10 +42,6 @@ public class LoadSimilarTracks extends AsyncTask<RequestParams,Void,String> {
                 br.close();
                 JSONObject root=new JSONObject(sb.toString());
                 JSONObject r=root.getJSONObject("results");
-
-
-
-
 
                 JSONObject results=r.getJSONObject("trackmatches");
                 JSONArray tracks=results.getJSONArray("track");

@@ -1,17 +1,14 @@
 package com.example.zero.hw05;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView.ViewHolder;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -65,13 +62,20 @@ public class MusicAdapter extends ArrayAdapter<Music> {
             @Override
             public void onClick(View v) {
 
-                if (list.get(position).isFavorate()) {
-                    favorate.setImageResource(android.R.drawable.star_big_off);
-                    list.get(position).setFavorate(false);
-                } else {
-                    favorate.setImageResource(android.R.drawable.star_big_on);
-                    list.get(position).setFavorate(true);
+            if (list.get(position).isFavorate()) {
+                Log.d("MusicAdapter", "getView:isFavorate");
+                favorate.setImageResource(android.R.drawable.star_big_off);
+                list.get(position).setFavorate(false);
+                Music.favorites.remove(list.get(position));
+                if (context instanceof MainActivity){
+                    Log.d("MusicAdapter", "getView:isFavorate:list removed item");
+                    notifyDataSetChanged();
                 }
+            } else {
+                favorate.setImageResource(android.R.drawable.star_big_on);
+                list.get(position).setFavorate(true);
+                Music.favorites.add(list.get(position));
+            }
             }
         });
 

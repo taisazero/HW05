@@ -2,7 +2,6 @@ package com.example.zero.hw05;
 
 import android.graphics.Bitmap;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -102,4 +101,30 @@ public class Music {
         this.isFavorate = false;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Music music = (Music) o;
+
+        if (isFavorate != music.isFavorate) return false;
+        if (!name.equals(music.name)) return false;
+        if (!artist.equals(music.artist)) return false;
+        if (!url.equals(music.url)) return false;
+        if (!smallURL.equals(music.smallURL)) return false;
+        return largeURL.equals(music.largeURL);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name.hashCode();
+        result = 31 * result + artist.hashCode();
+        result = 31 * result + url.hashCode();
+        result = 31 * result + smallURL.hashCode();
+        result = 31 * result + largeURL.hashCode();
+        result = 31 * result + (isFavorate ? 1 : 0);
+        return result;
+    }
 }

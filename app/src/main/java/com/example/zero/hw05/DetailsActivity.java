@@ -2,20 +2,20 @@ package com.example.zero.hw05;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 /**
  * @author Josiah Laivins
@@ -62,7 +62,22 @@ public class DetailsActivity extends AppCompatActivity {
             Log.d("Details", "Intent Error");
         }
 
+        MusicAdapter adapter= new MusicAdapter(this,Music.results);
 
+        ListView list=(ListView)findViewById(R.id.listSimilarTracks);
+        list.setAdapter(adapter);
+        list.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("ResultsActivity::", "List clicked");
+                Intent i = new Intent(DetailsActivity.this,DetailsActivity.class);
+                i.putExtra("position",position);
+                startActivity(i);
+                finish();
+            }
+        });
     }
 
     public void setHandlers() {
@@ -88,14 +103,19 @@ public class DetailsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_go_home:
-                Toast.makeText(this, "You are already home!",
-                        Toast.LENGTH_LONG).show();
+                Intent i = new Intent(DetailsActivity.this, MainActivity.class);
+                startActivity(i);
+                finish();
                 break;
 
             case R.id.action_exit:
                 Toast.makeText(this, "Exited!",
                         Toast.LENGTH_SHORT).show();
-                finish();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    finishAndRemoveTask();
+                } else {
+                    this.finishAffinity();
+                }
                 break;
         }
 

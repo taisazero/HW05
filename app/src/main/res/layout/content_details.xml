@@ -42,7 +42,8 @@
             android:text="Name:"
             android:textAlignment="center"
             android:textColor="@android:color/background_dark"
-            android:textSize="18sp"/>
+            android:textSize="18sp"
+            />
 
         <TextView
             android:id="@+id/txtResultName"
