@@ -33,7 +33,7 @@ import java.util.ArrayList;
  */
 public class MainActivity extends AppCompatActivity {
     Button search;
-    EditText text;
+    EditText text;//ji
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,7 +138,6 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
-    @SuppressLint("ApplySharedPref")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
