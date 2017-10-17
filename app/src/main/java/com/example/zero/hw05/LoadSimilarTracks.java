@@ -11,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.util.ArrayList;
 
 /**
  * @author Josiah Laivins
@@ -19,9 +20,10 @@ import java.net.HttpURLConnection;
  * @version 10/16/2017
  */
 public class LoadSimilarTracks extends AsyncTask<RequestParams,Void,String> {
-    Music m;
-    public LoadSimilarTracks(Music m){
-        this.m=m;
+    Music z;
+    ArrayList<Music>temp;
+    public LoadSimilarTracks(Music l){
+        this.z=l;
     }
     protected String doInBackground(RequestParams... requests) {
         String data="";
@@ -41,11 +43,13 @@ public class LoadSimilarTracks extends AsyncTask<RequestParams,Void,String> {
                 }
                 br.close();
                 JSONObject root=new JSONObject(sb.toString());
-                JSONObject r=root.getJSONObject("results");
+                JSONObject r=root.getJSONObject("similartracks");
 
-                JSONObject results=r.getJSONObject("trackmatches");
-                JSONArray tracks=results.getJSONArray("track");
-                Log.d("parsing 1","found "+tracks.length()+"track");
+
+                JSONArray tracks=r.getJSONArray("track");
+                Log.d("parsing Similars","found "+tracks.length()+" track");
+                temp=new ArrayList<Music>();
+
                 for(int i =0; i<tracks.length();i++){
                     JSONObject t=tracks.getJSONObject(i);
                     Music m=new Music();
@@ -57,7 +61,8 @@ public class LoadSimilarTracks extends AsyncTask<RequestParams,Void,String> {
                     JSONObject largePic=images.getJSONObject(3);
                     m.setSmallURL(smallPic.getString("#text"));
                     m.setLargeURL(largePic.getString("#text"));
-                    Music.results.add(m);
+                    temp.add(m);
+
                 }
 
             }
@@ -78,6 +83,7 @@ public class LoadSimilarTracks extends AsyncTask<RequestParams,Void,String> {
     protected void onPostExecute(String s) {
 
         Log.d("Similar Tracks",s);
+        z.setSimilars(temp);
 
 
     }

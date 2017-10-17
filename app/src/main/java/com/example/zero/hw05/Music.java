@@ -13,8 +13,8 @@ import java.util.ArrayList;
  */
 public class Music {
     public static ArrayList<Music> results;
-    public ArrayList<Music> similars;
-    private static ArrayList<Music> favorites = new ArrayList<>();
+    public  ArrayList<Music> similars=new ArrayList<Music>();;
+    private static ArrayList<Music> favorites = new ArrayList<Music>();
     private String name;
     private String artist;
     private String url;
@@ -115,6 +115,7 @@ public class Music {
         this.smallURL=small;
         this.largeURL=large;
         this.isFavorate = false;
+
     }
 
     @Override
