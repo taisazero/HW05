@@ -104,7 +104,7 @@ public class LoadData extends AsyncTask<RequestParams,Void,String> {
     protected void onPostExecute(String s) {
 
         for (Music m : Music.results) {
-            Log.d("Musics",m.toString() );
+          // Log.d("Musics",m.toString() );
         }
         m.startActivity(i);
         //m.finish();

@@ -19,15 +19,19 @@ import java.util.ArrayList;
  *
  * @version 10/16/2017
  */
-public class LoadSimilarTracks extends AsyncTask<RequestParams,Void,String> {
+public class LoadSimilarTracks extends AsyncTask<RequestParams,Void,ArrayList<Music>> {
     Music z;
-    ArrayList<Music>temp;
-    public LoadSimilarTracks(Music l){
+    DetailsActivity a;
+
+    public LoadSimilarTracks(DetailsActivity a,Music l){
         this.z=l;
+        z.setSimilars(new ArrayList<Music>());
+        this.a=a;
     }
-    protected String doInBackground(RequestParams... requests) {
+    protected ArrayList<Music> doInBackground(RequestParams... requests) {
         String data="";
         StringBuilder sb=null;
+        ArrayList <Music>temp=new ArrayList<Music>();
 
         try {
             HttpURLConnection connection=requests[0].setUpConnection();
@@ -48,20 +52,21 @@ public class LoadSimilarTracks extends AsyncTask<RequestParams,Void,String> {
 
                 JSONArray tracks=r.getJSONArray("track");
                 Log.d("parsing Similars","found "+tracks.length()+" track");
-                temp=new ArrayList<Music>();
+
 
                 for(int i =0; i<tracks.length();i++){
                     JSONObject t=tracks.getJSONObject(i);
                     Music m=new Music();
                     m.setName(t.getString("name"));
-                    m.setArtist(t.getString("artist"));
+                    m.setArtist(t.getJSONObject("artist").getString("name"));
                     m.setUrl(t.getString("url"));
                     JSONArray images=t.getJSONArray("image");
                     JSONObject smallPic=images.getJSONObject(0);
-                    JSONObject largePic=images.getJSONObject(3);
+                    JSONObject largePic=images.getJSONObject(2);
                     m.setSmallURL(smallPic.getString("#text"));
                     m.setLargeURL(largePic.getString("#text"));
                     temp.add(m);
+                  //  Log.d("Adding", i+" "+m.toString());
 
                 }
 
@@ -74,16 +79,23 @@ public class LoadSimilarTracks extends AsyncTask<RequestParams,Void,String> {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return sb.toString();
+        return temp;
     }
 
 
 
     @Override
-    protected void onPostExecute(String s) {
+    protected void onPostExecute(ArrayList<Music> temp) {
 
-        Log.d("Similar Tracks",s);
+
         z.setSimilars(temp);
+        MusicAdapter md= new MusicAdapter(a,z.getSimilars());
+        for (Music m : z.getSimilars()){
+            Log.d("Debugging",m.toString());
+        }
+        a.list.setAdapter(md);
+
+
 
 
     }

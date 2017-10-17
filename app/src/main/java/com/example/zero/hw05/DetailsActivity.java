@@ -24,6 +24,7 @@ import com.google.gson.Gson;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
 
 /**
  * @author Josiah Laivins
@@ -49,9 +50,17 @@ public class DetailsActivity extends AppCompatActivity {
         artist = (TextView) findViewById(R.id.txtResultArtist);
         url = (TextView) findViewById(R.id.txtResultUrl);
         pic = (ImageView) findViewById(R.id.imgArtist);
-        if (getIntent().getExtras() != null) {
-            int p = (int) getIntent().getExtras().get("position");
-            Music selection = Music.results.get(p);
+        int p=0;
+        Music selection;
+        if (getIntent().getExtras().get("position") != null) {
+            p = (int) getIntent().getExtras().get("position");
+            selection = Music.results.get(p);
+        }
+        else {
+             p = (int) getIntent().getExtras().get("positionNEW");
+            selection = Music.similars.get(p);
+        }
+
             name.setText(selection.getName());
             artist.setText(selection.getArtist());
             url.setText(selection.getUrl());
@@ -66,22 +75,24 @@ public class DetailsActivity extends AppCompatActivity {
             link.addParam("api_key","426392c61e4a15c55916cd91b1bf857d");
             link.addParam("limit","10");
             Log.d("Similar",link.getEncodedUrl());
-            new LoadSimilarTracks(selection).execute(link);
 
-            MusicAdapter md= new MusicAdapter(this,selection.getSimilars());
-            for (Music m: selection.getSimilars()){
-                Log.d("Similar Debug", m.toString());
+             new LoadSimilarTracks(this,selection).execute(link);
+
+            Log.d("Detailed Similars",new Integer(selection.getSimilars().size()).toString());
+
+            for (Music m : selection.getSimilars()){
+               Log.d("Detailed Similars", m.toString());
             }
-            list.setAdapter(md);
+
+
+
 
 
             setHandlers();
 
-        } else {
-            Log.d("Details", "Intent Error");
-        }
 
-        MusicAdapter adapter= new MusicAdapter(this,Music.results);
+
+        MusicAdapter adapter= new MusicAdapter(this,Music.similars);
 
         ListView list=(ListView)findViewById(R.id.listSimilarTracks);
         list.setAdapter(adapter);
@@ -92,7 +103,8 @@ public class DetailsActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.d("ResultsActivity::", "List clicked");
                 Intent i = new Intent(DetailsActivity.this,DetailsActivity.class);
-                i.putExtra("position",position);
+                i.putExtra("positionNEW",position);
+
                 startActivity(i);
                 finish();
             }
