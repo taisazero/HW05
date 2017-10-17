@@ -66,7 +66,7 @@ public class MusicAdapter extends ArrayAdapter<Music> {
                 Log.d("MusicAdapter", "getView:isFavorate");
                 favorate.setImageResource(android.R.drawable.star_big_off);
                 list.get(position).setFavorate(false);
-                Music.favorites.remove(list.get(position));
+                Music.removeFavorite(list.get(position));
                 if (context instanceof MainActivity){
                     Log.d("MusicAdapter", "getView:isFavorate:list removed item");
                     notifyDataSetChanged();
@@ -74,7 +74,7 @@ public class MusicAdapter extends ArrayAdapter<Music> {
             } else {
                 favorate.setImageResource(android.R.drawable.star_big_on);
                 list.get(position).setFavorate(true);
-                Music.favorites.add(list.get(position));
+                Music.addFavorite(list.get(position));
             }
             }
         });

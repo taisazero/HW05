@@ -42,7 +42,9 @@ public class LoadData extends AsyncTask<RequestParams,Void,String> {
                 }
             }
             for (Music music : temp) {
-                Music.favorites.add(music);
+                if (!Music.addFavorite(music)){
+                    break;
+                }
             }
         }
         Music.results = new ArrayList<>();

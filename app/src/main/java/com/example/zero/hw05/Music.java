@@ -1,6 +1,7 @@
 package com.example.zero.hw05;
 
 import android.graphics.Bitmap;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 public class Music {
     public static ArrayList<Music> results;
     public ArrayList<Music> similars;
-    public static ArrayList<Music> favorites = new ArrayList<>();
+    private static ArrayList<Music> favorites = new ArrayList<>();
     private String name;
     private String artist;
     private String url;
@@ -52,6 +53,21 @@ public class Music {
 
     public String getSmallURL() {
         return smallURL;
+    }
+
+    public static boolean addFavorite(Music favorite) {
+        if (favorites.size() <= 20) {
+            favorites.add(favorite);
+            return true;
+        }
+        return false;
+    }
+
+    public static ArrayList<Music> getFavorites() {
+        return favorites;
+    }
+    public static void removeFavorite(Music m) {
+        favorites.remove(m);
     }
 
     public void setSmallURL(String smallURL) {

@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void generateList() {
 
-        ArrayList<Music> favorites = Music.favorites;
+        ArrayList<Music> favorites = Music.getFavorites();
 
         MusicAdapter adapter = new MusicAdapter(this, favorites);
 
