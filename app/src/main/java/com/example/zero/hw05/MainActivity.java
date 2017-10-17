@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         if (pref.contains("MusicArrayList")) {
             String array = pref.getString("MusicArrayList", null);
             Gson gson = new Gson();
+
             //String json = pref.getString(TAG, null);
             //Type type = new TypeToken<ArrayList<ArrayObject>>() {}.getType();
             //ArrayList<ArrayObject> arrayList = gson.fromJson(json, type);
