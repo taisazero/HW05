@@ -2,6 +2,7 @@ package com.example.zero.hw05;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -19,7 +20,15 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.RunnableFuture;
 
 /**
@@ -36,6 +45,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("MusicHandler", MODE_PRIVATE);
+        SharedPreferences.Editor edit = pref.edit();
+        if (pref.contains("MusicArrayList")) {
+            String array = pref.getString("MusicArrayList", null);
+            Gson gson = new Gson();
+            //String json = pref.getString(TAG, null);
+            //Type type = new TypeToken<ArrayList<ArrayObject>>() {}.getType();
+            //ArrayList<ArrayObject> arrayList = gson.fromJson(json, type);
+
+        }
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
