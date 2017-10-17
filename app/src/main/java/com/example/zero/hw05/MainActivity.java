@@ -24,6 +24,9 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Josiah Laivins
@@ -39,20 +42,26 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-/*
-        SharedPreferences pref = getApplicationContext().getSharedPreferences("MusicHandler", MODE_PRIVATE);
-        Log.d("MainActivity", "does pref contain: " + pref.contains("MusicArrayList"));
-        if (pref.contains("MusicArrayList")) {
-            Gson gson = new Gson();
-            String json = pref.getString("MusicArrayList", "");
-            ArrayList<Music> musicArrayGSON = gson.fromJson(json, ArrayList.class);
-                for (Object o : musicArrayGSON) {
-                Music.addFavorite((Music)o);
-            }
 
-            Log.d("MainActivity", "added favorites");
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("MusicHandler", MODE_PRIVATE);
+        Log.d("MainActivity", "does pref contain: " + pref.contains("MusicSet"));
+        if (pref.contains("MusicSet")) {
+            Gson gson = new Gson();
+            Set<String> json = pref.getStringSet("MusicSet", null);
+            if (json != null) {
+                String[] musicArray = new String[json.size()];
+                int i = 0;
+                for (String s : json) {
+                    musicArray[i++] = s;
+                }
+                for (String s : musicArray) {
+                    Music.addFavorite(gson.fromJson(s, Music.class));
+                }
+
+                Log.d("MainActivity", "added favorites");
+            }
         }
-*/
+
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
         setHandlers();
@@ -139,6 +148,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("MusicHandler", MODE_PRIVATE);
+        SharedPreferences.Editor edit = pref.edit();
+        Gson gson = new Gson();
+        String[] arrayOfMusicStrings = new String[Music.getFavorites().size()];
+        for (int i = 0; i < arrayOfMusicStrings.length; i++) {
+            arrayOfMusicStrings[i] = gson.toJson(Music.getFavorites().get(i), Music.class);
+        }
+        Set<String> json = new HashSet<>(Arrays.asList(arrayOfMusicStrings));
+        edit.putStringSet("MusicSet", json);
+        edit.commit();
+
+        super.onDestroy();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_go_home:
@@ -150,8 +175,12 @@ public class MainActivity extends AppCompatActivity {
                 SharedPreferences pref = getApplicationContext().getSharedPreferences("MusicHandler", MODE_PRIVATE);
                 SharedPreferences.Editor edit = pref.edit();
                 Gson gson = new Gson();
-                String json = gson.toJson(Music.getFavorites());
-                edit.putString("MusicArrayList", json);
+                String[] arrayOfMusicStrings = new String[Music.getFavorites().size()];
+                for (int i = 0; i < arrayOfMusicStrings.length; i++) {
+                    arrayOfMusicStrings[i] = gson.toJson(Music.getFavorites().get(i), Music.class);
+                }
+                Set<String> json = new HashSet<>(Arrays.asList(arrayOfMusicStrings));
+                edit.putStringSet("MusicSet", json);
                 edit.commit();
 
                 Toast.makeText(this, "Exited!",

@@ -18,6 +18,10 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * @author Josiah Laivins
  * @author Erfan Al-Hossami
@@ -64,8 +68,8 @@ public class ResultsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_go_home:
-                Intent i = new Intent(ResultsActivity.this, MainActivity.class);
-                startActivity(i);
+                Intent intent = new Intent(ResultsActivity.this, MainActivity.class);
+                startActivity(intent);
                 finish();
                 break;
 
@@ -73,8 +77,12 @@ public class ResultsActivity extends AppCompatActivity {
                 SharedPreferences pref = getApplicationContext().getSharedPreferences("MusicHandler", MODE_PRIVATE);
                 SharedPreferences.Editor edit = pref.edit();
                 Gson gson = new Gson();
-                String json = gson.toJson(Music.getFavorites());
-                edit.putString("MusicArrayList", json);
+                String[] arrayOfMusicStrings = new String[Music.getFavorites().size()];
+                for (int i = 0; i < arrayOfMusicStrings.length; i++) {
+                    arrayOfMusicStrings[i] = gson.toJson(Music.getFavorites().get(i), Music.class);
+                }
+                Set<String> json = new HashSet<>(Arrays.asList(arrayOfMusicStrings));
+                edit.putStringSet("MusicSet", json);
                 edit.commit();
                 Toast.makeText(this, "Exited!",
                         Toast.LENGTH_SHORT).show();
