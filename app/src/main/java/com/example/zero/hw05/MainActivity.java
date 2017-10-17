@@ -40,7 +40,7 @@ import java.util.concurrent.RunnableFuture;
  */
 public class MainActivity extends AppCompatActivity {
     Button search;
-    EditText text;
+    EditText text;//ji
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
