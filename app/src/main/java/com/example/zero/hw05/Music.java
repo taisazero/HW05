@@ -56,13 +56,22 @@ public class Music {
     }
 
     public static boolean addFavorite(Music favorite) {
-        if (favorites.size() <= 20) {
+
+
+        if (favorites.size() <= 20 && favorites.indexOf(favorite)==-1) {
             favorites.add(favorite);
+
             return true;
         }
         return false;
     }
 
+    public static boolean checkSize(){
+        return !(favorites.size()<=20);
+    }
+    public static boolean isDup(Music fav){
+       return favorites.indexOf(fav)!=-1;
+    }
     public static ArrayList<Music> getFavorites() {
         return favorites;
     }
@@ -129,7 +138,7 @@ public class Music {
 
         Music music = (Music) o;
 
-        if (isFavorate != music.isFavorate) return false;
+        //if (isFavorate != music.isFavorate) return false;
         if (!name.equals(music.name)) return false;
         if (!artist.equals(music.artist)) return false;
         if (!url.equals(music.url)) return false;

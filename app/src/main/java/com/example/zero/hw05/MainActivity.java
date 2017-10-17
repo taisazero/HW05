@@ -26,6 +26,7 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -37,11 +38,13 @@ import java.util.Set;
 public class MainActivity extends AppCompatActivity {
     Button search;
     EditText text;//ji
+    ListView list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        list=(ListView)findViewById(R.id.mainListView);
 
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MusicHandler", MODE_PRIVATE);
         Log.d("MainActivity", "does pref contain: " + pref.contains("MusicSet"));
@@ -64,9 +67,10 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
-        setHandlers();
+
 
         generateList();
+        setHandlers();
     }
 
     @Override
@@ -83,16 +87,16 @@ public class MainActivity extends AppCompatActivity {
 
         MusicAdapter adapter = new MusicAdapter(this, favorites);
 
-        ListView list = (ListView) findViewById(R.id.mainListView);
+        list = (ListView) findViewById(R.id.mainListView);
         list.setAdapter(adapter);
         list.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("ResultsActivity::", "List clicked");
-                Intent i = new Intent(MainActivity.this, DetailsActivity.class);
-                i.putExtra("position", position);
+                Intent i = new Intent(MainActivity.this,DetailsActivity.class);
+                i.putExtra("positionFAV",position);
+
                 startActivity(i);
                 finish();
             }
@@ -121,6 +125,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+
+
     }
 
     private boolean isConnected() {

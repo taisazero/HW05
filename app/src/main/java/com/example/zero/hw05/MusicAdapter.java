@@ -78,8 +78,12 @@ public class MusicAdapter extends ArrayAdapter<Music> {
                 if (Music.addFavorite(list.get(position))) {
                     favorate.setImageResource(android.R.drawable.star_big_on);
                     list.get(position).setFavorate(true);
-                } else {
+                } else if(Music.checkSize()){
                     Toast.makeText(context, "You have reached your favorate limit!!", Toast.LENGTH_SHORT).show();
+
+                }
+                else if(Music.isDup(list.get(position))){
+                    Toast.makeText(context, "Duplicate Song Chosen!", Toast.LENGTH_SHORT).show();
                 }
             }
             }

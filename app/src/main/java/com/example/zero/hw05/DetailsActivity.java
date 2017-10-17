@@ -51,14 +51,22 @@ public class DetailsActivity extends AppCompatActivity {
         url = (TextView) findViewById(R.id.txtResultUrl);
         pic = (ImageView) findViewById(R.id.imgArtist);
         int p=0;
-        Music selection;
+        Music selection=null;
         if (getIntent().getExtras().get("position") != null) {
             p = (int) getIntent().getExtras().get("position");
             selection = Music.results.get(p);
         }
-        else {
+        else if(getIntent().getExtras().get("positionNEW") != null) {
              p = (int) getIntent().getExtras().get("positionNEW");
             selection = Music.similars.get(p);
+        }
+        else if(getIntent().getExtras().get("positionFAV") != null){
+            Log.d("Fav","here");
+            p = (int) getIntent().getExtras().get("positionFAV");
+            selection = Music.getFavorites().get(p);
+        }
+        else{
+            Log.d("Intent Error","No Data");
         }
 
             name.setText(selection.getName());
