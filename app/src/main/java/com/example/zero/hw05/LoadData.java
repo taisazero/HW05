@@ -42,7 +42,8 @@ public class LoadData extends AsyncTask<RequestParams,Void,String> {
                 }
             }
             for (Music music : temp) {
-                if (!Music.addFavorite(music)){
+                if (!Music.addFavorite(music)) {
+                    Toast.makeText(m, "You have reached your favorite limit!!", Toast.LENGTH_SHORT).show();
                     break;
                 }
             }

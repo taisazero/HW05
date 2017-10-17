@@ -1,6 +1,7 @@
 package com.example.zero.hw05;
 
 import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -72,9 +74,11 @@ public class MusicAdapter extends ArrayAdapter<Music> {
                     notifyDataSetChanged();
                 }
             } else {
-                favorate.setImageResource(android.R.drawable.star_big_on);
-                list.get(position).setFavorate(true);
-                Music.addFavorite(list.get(position));
+                if (!Music.addFavorite(list.get(position))) {
+                    favorate.setImageResource(android.R.drawable.star_big_on);
+                    list.get(position).setFavorate(true);
+                    Toast.makeText(context, "You have reached your favorate limit!!", Toast.LENGTH_SHORT).show();
+                }
             }
             }
         });
