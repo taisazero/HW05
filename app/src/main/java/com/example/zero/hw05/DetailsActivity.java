@@ -1,6 +1,8 @@
 package com.example.zero.hw05;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,6 +18,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 /**
  * @author Josiah Laivins
@@ -110,6 +114,7 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
 
+    @SuppressLint("ApplySharedPref")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -120,6 +125,15 @@ public class DetailsActivity extends AppCompatActivity {
                 break;
 
             case R.id.action_exit:
+                SharedPreferences pref = getApplicationContext().getSharedPreferences("MusicHandler", MODE_PRIVATE);
+                SharedPreferences.Editor edit = pref.edit();
+                if (pref.contains("MusicArrayList")) {
+                    String array = pref.getString("MusicArrayList", null);
+                    Gson gson = new Gson();
+                    String json = gson.toJson(Music.getFavorites());
+                    edit.putString("MusicArrayList", json);
+                    edit.commit();
+                }
                 Toast.makeText(this, "Exited!",
                         Toast.LENGTH_SHORT).show();
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

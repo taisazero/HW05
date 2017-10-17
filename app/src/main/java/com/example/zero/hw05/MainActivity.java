@@ -1,5 +1,6 @@
 package com.example.zero.hw05;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -51,11 +52,9 @@ public class MainActivity extends AppCompatActivity {
         if (pref.contains("MusicArrayList")) {
             String array = pref.getString("MusicArrayList", null);
             Gson gson = new Gson();
-
-            //String json = pref.getString(TAG, null);
-            //Type type = new TypeToken<ArrayList<ArrayObject>>() {}.getType();
-            //ArrayList<ArrayObject> arrayList = gson.fromJson(json, type);
-
+            String json = gson.toJson(Music.getFavorites());
+            edit.putString("MusicArrayList", json);
+            edit.apply();
         }
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -152,6 +151,15 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.action_exit:
+                SharedPreferences pref = getApplicationContext().getSharedPreferences("MusicHandler", MODE_PRIVATE);
+                SharedPreferences.Editor edit = pref.edit();
+                if (pref.contains("MusicArrayList")) {
+                    String array = pref.getString("MusicArrayList", null);
+                    Gson gson = new Gson();
+                    String json = gson.toJson(Music.getFavorites());
+                    edit.putString("MusicArrayList", json);
+                    edit.commit();
+                }
                 Toast.makeText(this, "Exited!",
                         Toast.LENGTH_SHORT).show();
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
