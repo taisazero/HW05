@@ -74,9 +74,10 @@ public class MusicAdapter extends ArrayAdapter<Music> {
                     notifyDataSetChanged();
                 }
             } else {
-                if (!Music.addFavorite(list.get(position))) {
+                if (Music.addFavorite(list.get(position))) {
                     favorate.setImageResource(android.R.drawable.star_big_on);
                     list.get(position).setFavorate(true);
+                } else {
                     Toast.makeText(context, "You have reached your favorate limit!!", Toast.LENGTH_SHORT).show();
                 }
             }

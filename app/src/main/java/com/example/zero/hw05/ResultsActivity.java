@@ -72,13 +72,10 @@ public class ResultsActivity extends AppCompatActivity {
             case R.id.action_exit:
                 SharedPreferences pref = getApplicationContext().getSharedPreferences("MusicHandler", MODE_PRIVATE);
                 SharedPreferences.Editor edit = pref.edit();
-                if (pref.contains("MusicArrayList")) {
-                    String array = pref.getString("MusicArrayList", null);
-                    Gson gson = new Gson();
-                    String json = gson.toJson(Music.getFavorites());
-                    edit.putString("MusicArrayList", json);
-                    edit.commit();
-                }
+                Gson gson = new Gson();
+                String json = gson.toJson(Music.getFavorites());
+                edit.putString("MusicArrayList", json);
+                edit.commit();
                 Toast.makeText(this, "Exited!",
                         Toast.LENGTH_SHORT).show();
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

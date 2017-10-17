@@ -70,6 +70,10 @@ public class Music {
         favorites.remove(m);
     }
 
+    public static void setFavorites(ArrayList<Music> m) {
+        favorites = m;
+    }
+
     public void setSmallURL(String smallURL) {
         this.smallURL = smallURL;
     }

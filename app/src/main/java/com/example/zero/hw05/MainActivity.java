@@ -23,14 +23,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.concurrent.RunnableFuture;
 
 /**
  * @author Josiah Laivins
@@ -46,17 +39,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+/*
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MusicHandler", MODE_PRIVATE);
-        SharedPreferences.Editor edit = pref.edit();
+        Log.d("MainActivity", "does pref contain: " + pref.contains("MusicArrayList"));
         if (pref.contains("MusicArrayList")) {
-            String array = pref.getString("MusicArrayList", null);
             Gson gson = new Gson();
-            String json = gson.toJson(Music.getFavorites());
-            edit.putString("MusicArrayList", json);
-            edit.apply();
-        }
+            String json = pref.getString("MusicArrayList", "");
+            ArrayList<Music> musicArrayGSON = gson.fromJson(json, ArrayList.class);
+                for (Object o : musicArrayGSON) {
+                Music.addFavorite((Music)o);
+            }
 
+            Log.d("MainActivity", "added favorites");
+        }
+*/
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
         setHandlers();
@@ -154,13 +150,11 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_exit:
                 SharedPreferences pref = getApplicationContext().getSharedPreferences("MusicHandler", MODE_PRIVATE);
                 SharedPreferences.Editor edit = pref.edit();
-                if (pref.contains("MusicArrayList")) {
-                    String array = pref.getString("MusicArrayList", null);
-                    Gson gson = new Gson();
-                    String json = gson.toJson(Music.getFavorites());
-                    edit.putString("MusicArrayList", json);
-                    edit.commit();
-                }
+                Gson gson = new Gson();
+                String json = gson.toJson(Music.getFavorites());
+                edit.putString("MusicArrayList", json);
+                edit.commit();
+
                 Toast.makeText(this, "Exited!",
                         Toast.LENGTH_SHORT).show();
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
