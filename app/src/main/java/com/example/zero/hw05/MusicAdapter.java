@@ -71,6 +71,7 @@ public class MusicAdapter extends ArrayAdapter<Music> {
                 Music.removeFavorite(list.get(position));
                 if (context instanceof MainActivity){
                     Log.d("MusicAdapter", "getView:isFavorate:list removed item");
+                    Toast.makeText(context, "ListView is updated", Toast.LENGTH_SHORT).show();
                     notifyDataSetChanged();
                 }
             } else {
